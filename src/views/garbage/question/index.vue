@@ -1,317 +1,281 @@
 <template>
   <div class="app-container">
-    <!-- 查询条件开始 -->
     <el-form ref="queryForm" :model="queryParams" :inline="true" label-width="68px">
-      <el-form-item label="垃圾名称" prop="garbageName">
-        <el-input
-          v-model="queryParams.garbageName"
-          placeholder="请输入垃圾名称"
-          clearable
-          size="small"
-          style="width:240px"
-        /></el-form-item>
-      <el-form-item label="垃圾类型" prop="garbageType">
-        <el-select
-          v-model="queryParams.garbageType"
-          placeholder="请输入垃圾类型"
-          clearable
-          size="small"
-          style="width:240px"
-        >
-          <el-option
-            v-for="dict in typeOptions"
-            :key="dict.dictValue"
-            :label="dict.dictLabel"
-            :value="dict.dictValue"
+      <el-row>
+        <el-col :span="8" style="text-align: left;">
+          <el-input
+            v-model="queryParams.garbageName"
+            placeholder="请输入垃圾名称"
+            clearable
+            size="small"
+            style="width: 240px"
+            suffix-icon="el-icon-search"
+            @keyup.native.enter="filterGarbage"
           />
-        </el-select>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button type="primary" icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
-      </el-form-item>
+        </el-col>
+        <el-col :span="8" style="text-align: left;">
+          <el-select
+            v-model="queryParams.garbageType"
+            placeholder="请选择垃圾类型"
+            clearable
+            size="small"
+            style="width: 240px"
+          >
+            <el-option
+              v-for="item in typeOptions"
+              :key="item.dictValue"
+              :label="item.dictLabel"
+              :value="item.dictValue"
+            />
+          </el-select>
+          <el-button type="primary" icon="el-icon-search" size="mini" @click="filterGarbage">搜索</el-button>
+        </el-col>
+        <el-col :span="8" style="text-align: right">
+          <el-button type="primary" icon="el-icon-plus" size="mini" @click="handleAdd" style="width: 90px">新增</el-button>
+        </el-col>
+      </el-row>
     </el-form>
-    <!-- 查询条件结束 -->
 
-    <!-- 表格工具按钮开始 -->
-    <el-row :gutter="10" style="margin-bottom: 8px;">
-      <el-col :span="1.5">
-        <el-button type="primary" icon="el-icon-plus" size="mini" @click="handleAdd">新增</el-button>
-      </el-col>
-    </el-row>
-    <!-- 表格工具按钮结束 -->
-
-    <!-- 数据表格开始 -->
-    <el-table v-loading="loading" border :data="questionTableList" @selection-change="handleSelectionChange">
+    <el-table style="margin-top: 20px" v-loading="loading" border stripe :data="questionTableList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="垃圾ID" align="center" prop="questionId" />
-      <el-table-column label="垃圾类型" align="center" prop="garbageType" :formatter="questionFormatter" />
+      <!-- <el-table-column label="垃圾ID" align="center" prop="garbageId" /> -->
       <el-table-column label="垃圾名称" align="center" prop="garbageName" />
+      <el-table-column label="垃圾类型" align="center" prop="garbageType" :formatter="questionFormatter" />
       <el-table-column label="解析" align="center" prop="analysis" />
       <el-table-column label="备注" align="center" prop="remark" />
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
-          <el-button type="text" icon="el-icon-edit" size="mini" @click="handleUpdate(scope.row)">修改</el-button>
-          <el-button :disabled="scope.row.userId===1" type="text" icon="el-icon-delete" size="mini" @click="handleDelete(scope.row)">删除</el-button>
+          <el-button type="warning" icon="el-icon-edit" size="mini" @click="handleUpdate(scope.row)">修改</el-button>
+          <el-button :disabled="scope.row.userId === 1" type="danger" icon="el-icon-delete" size="mini" @click="handleDelete(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <!-- 数据表格结束 -->
-    <!-- 分页控件开始 -->
-    <el-pagination
-      v-show="total>0"
-      :current-page="queryParams.pageNum"
-      :page-sizes="[5, 10, 20, 30]"
-      :page-size="queryParams.pageSize"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="total"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-    />
-    <!-- 分页控件结束 -->
 
-    <!-- 添加修改弹出层开始 -->
+    <div class="packaged-pagination">
+      <span class="packaged-pagination__total" :total="total">共 {{ total }} 条</span>
+      <el-pagination
+        :current-page="queryParams.pageNum"
+        :page-sizes="[5, 10, 20, 30]"
+        :page-size="queryParams.pageSize"
+        :total="total"
+        layout="total, sizes, prev, pager, next, jumper"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+      />
+    </div>
+
+    <!-- 新建修改 -->
     <el-dialog
       :title="title"
       :visible.sync="open"
-      width="350px"
-      center
+      width="500px"
       append-to-body
     >
-      <el-form ref="form" :model="form" :rules="rules" label-width="50px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="90px">
         <el-row>
-          <el-col :span="12">
-            <el-form-item label="类型" prop="garbageType">
+          <el-col>
+            <el-form-item label="垃圾类型" prop="garbageType">
               <el-select
                 v-model="form.garbageType"
-                placeholder="类型"
+                placeholder="请选择垃圾类型"
                 clearable
                 size="small"
-                style="width:240px"
+                style="width: 300px"
               >
                 <el-option
-                  v-for="d in typeOptions"
-                  :key="d.dictValue"
-                  :label="d.dictLabel"
-                  :value="d.dictValue"
-                >{{ d.dictLabel }}</el-option>
+                  v-for="item in typeOptions"
+                  :key="item.dictValue"
+                  :label="item.dictLabel"
+                  :value="item.dictValue"
+                >{{ item.dictLabel }}</el-option>
               </el-select>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12">
-            <el-form-item label="名称" prop="garbageName">
-              <el-input v-model="form.garbageName" style="width:240px" placeholder="请输入名称" clearable size="small" />
-            </el-form-item></el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="解析" prop="analysis">
-              <el-input v-model="form.analysis" style="width:240px" placeholder="请输入解析" clearable size="small" />
+          <el-col>
+            <el-form-item label="垃圾名称" prop="garbageName">
+              <el-input v-model="form.garbageName" style="width: 300px" placeholder="请输入垃圾名称" clearable size="small" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12">
+          <el-col>
+            <el-form-item label="解析" prop="analysis">
+              <el-input v-model="form.analysis" style="width: 300px" placeholder="请输入解析" clearable size="small" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col>
             <el-form-item label="备注" prop="remark">
-              <el-input v-model="form.remark" style="width:240px" placeholder="请输入备注" clearable size="small" />
+              <el-input v-model="form.remark" style="width: 300px" placeholder="请输入备注" clearable size="small" />
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="handleSubmit">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="handleSubmit">确 定</el-button>
       </span>
     </el-dialog>
-    <!-- 添加修改弹出层结束 -->
-    <!-- 分配角色的弹出层开始 -->
-    <!-- 分配角色的弹出层结束 -->
   </div>
 </template>
+
 <script>
-// 引入api
-import { listQuest, addQuestion, updateQuestion, deleteQuestion, selectQuestionBankById } from '@/api/garbage/question'
+import { listQuest, addQuestion, updateQuestion, deleteQuestion, selectQuestionBankById } from '@/api/garbage/question';
 export default {
-  // 定义页面数据
   data() {
     return {
-      // 是否启用遮罩层
       loading: false,
-      // 选中数组
       ids: [],
-      // 非单个禁用
       single: true,
-      // 非多个禁用
       multiple: true,
-      // 分页数据总条数
       total: 0,
-      // 字典表格数据
       questionTableList: [],
       typeOptions: [],
-      // 弹出层标题
       title: '',
-      // 是否显示弹出层
       open: false,
-      // 查询参数
       queryParams: {
         pageNum: 1,
         pageSize: 10,
         garbageName: undefined
       },
-      // 表单数据
       form: {},
-      // 表单校验
       rules: {
         garbageName: [
-          { required: true, message: '名称不能为空', trigger: 'blur' }
+          { required: true, message: '垃圾名称不能为空', trigger: 'blur' }
         ],
         garbageType: [
-          { required: true, message: '类型不能为空', trigger: 'blur' }
+          { required: true, message: '垃圾类型不能为空', trigger: 'blur' }
         ]
       },
-      // 是否显示分配权限的弹出层
       selectRoleOpen: false,
-      // roleIds 分配角色列表选择状态
       roleIds: [],
-      // 角色数据
       roleTableList: [],
-      // 当前选中的用户
       currentUserId: undefined
     }
   },
   created() {
     // 使用全局的根据字典类型查询字典数据的方法查询字典数据
     this.getDataByType('garbage_type').then(res => {
-      this.typeOptions = res.data
+      this.typeOptions = res.data;
+    }).catch((e) => {
+      console.log(e);
     })
-    // 查询表格数据
-    this.getQuestionList()
+    this.getQuestionList();
   },
-  // 方法
   methods: {
-    // 查询表格数据
     getQuestionList() {
-      this.loading = true // 打开遮罩
+      this.loading = true;
       listQuest(this.queryParams).then(res => {
-        this.questionTableList = res.data
-        this.total = res.total
-        this.loading = false// 关闭遮罩
+        this.questionTableList = res.data;
+        this.total = res.total;
+        this.loading = false;
+      }).catch(e => {
+        console.log(e);
       })
     },
-    // 条件查询
-    handleQuery() {
-      this.getQuestionList()
+    filterGarbage() {
+      this.getQuestionList();
     },
-    // 重置查询条件
     resetQuery() {
-      this.resetForm('queryForm')
-      this.dateRange = []
-      this.getQuestionList()
+      this.resetForm('queryForm');
+      this.dateRange = [];
+      this.getQuestionList();
     },
-    // 数据表格的多选择框选择时触发
     handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.userId)
-      this.single = selection.length !== 1
-      this.multiple = !selection.length
+      this.ids = selection.map(item => item.userId);
+      this.single = selection.length !== 1;
+      this.multiple = !selection.length;
     },
-    // 分页pageSize变化时触发
-    handleSizeChange(val) {
-      this.queryParams.pageSize = val
-      // 重新查询
-      this.getQuestionList()
+    handleSizeChange(value) {
+      this.queryParams.pageSize = value;
+      this.getQuestionList();
     },
-
     questionFormatter(row) {
-      return this.selectDictLabel(this.typeOptions, row.garbageType)
+      return this.selectDictLabel(this.typeOptions, row.garbageType);
     },
-
-    // 点击上一页  下一页，跳转到哪一页面时触发
-    handleCurrentChange(val) {
-      this.queryParams.pageNum = val
-      // 重新查询
-      this.getQuestionList()
+    handleCurrentChange(value) {
+      this.queryParams.pageNum = value;
+      this.getQuestionList();
     },
-    // 打开添加的弹出层
     handleAdd() {
-      this.open = true
-      this.reset()
-      this.title = '添加用户信息'
+      this.open = true;
+      this.reset();
+      this.title = '添加题目';
     },
-    // 打开修改的弹出层
     handleUpdate(row) {
-      this.title = '修改用户信息'
-      const questionId = row.questionId || this.ids
-      this.open = true
-      this.reset()
-      // 根据Id查询一个用户信息
-      this.loading = true
-      selectQuestionBankById(questionId).then(res => {
-        this.form = res.data
-        this.loading = false
+      this.title = '修改题目信息';
+      const garbageId = row.garbageId || this.ids;
+      console.log('garbageId', garbageId);
+      this.open = true;
+      this.reset();
+      // 根据Id查询该垃圾
+      this.loading = true;
+      selectQuestionBankById(garbageId).then(res => {
+        console.log('handleUpdate', res);
+        this.form = res.data;
+        this.loading = false;
+      }).catch((e) => {
+        console.log('error', e);
       })
     },
-    // 执行删除
     handleDelete(row) {
-      const questionIds = row.questionId || this.ids
+      const questionIds = row.garbageId || this.ids;
       this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.loading = true
+        this.loading = true;
         deleteQuestion(questionIds).then(res => {
-          this.loading = false
-          this.msgSuccess('删除成功')
-          this.getQuestionList()// 全查询
+          this.loading = false;
+          this.msgSuccess('删除成功');
+          this.getQuestionList();
         }).catch(() => {
-          this.msgError('删除失败')
-          this.loading = false
+          this.msgError('删除失败');
+          this.loading = false;
         })
       }).catch(() => {
-        this.msgError('删除已取消')
-        this.loading = false
+        this.msgError('删除已取消');
+        this.loading = false;
       })
     },
-    // 保存
     handleSubmit() {
       this.$refs['form'].validate((valid) => {
         if (valid) {
-          // 做添加
-          this.loading = true
-          if (this.form.questionId === undefined) {
+          this.loading = true;
+          if (this.form.garbageId === undefined) {
             addQuestion(this.form).then(res => {
-              this.msgSuccess('保存成功')
-              this.getQuestionList()// 列表重新查询
-              this.open = false// 关闭弹出层
+              this.msgSuccess('保存成功');
+              this.getQuestionList();
+              this.open = false;
             }).catch(() => {
-              this.loading = false
-              this.msgSuccess('保存失败')
+              this.loading = false;
+              this.msgSuccess('保存失败');
             })
-          } else { // 做修改
+          } else {
             updateQuestion(this.form).then(res => {
-              this.msgSuccess('修改成功')
-              this.getQuestionList()// 列表重新查询
-              this.open = false// 关闭弹出层
+              this.msgSuccess('修改成功');
+              this.getQuestionList();
+              this.open = false;
             }).catch(() => {
-              this.loading = false
-              this.msgSuccess('修改失败')
+              this.loading = false;
+              this.msgSuccess('修改失败');
             })
           }
         }
       })
     },
-    // 取消
     cancel() {
-      this.open = false
-      this.title = ''
+      this.open = false;
+      this.title = '';
     },
-    // 重置表单
     reset() {
-      this.resetForm('form')
+      this.resetForm('form');
       this.form = {
-        questionId: undefined,
+        garbageId: undefined,
         garbageType: undefined,
         garbageName: undefined,
         analysis: undefined,
@@ -325,17 +289,36 @@ export default {
   }
 }
 </script>
-<style scoped>
-  .demo-table-expand {
-    font-size: 0;
+
+<style lang="scss">
+.packaged-pagination {
+  height: 50px;
+  padding: 8px;
+  width: 100%;
+  color: black;
+  .el-pagination {
+    float: right;
+    .el-pagination__total {
+      display: none;
+    }
   }
-  .demo-table-expand label {
-    width: 90px;
-    color: #99a9bf;
+}
+</style>
+
+<style lang="scss" scoped>
+.garbage-container {
+  padding: 24px;
+}
+.packaged-pagination {
+  &::after {
+    content: '';
+    clear: both;
   }
-  .demo-table-expand .el-form-item {
-    margin-right: 0;
-    margin-bottom: 0;
-    width: 50%;
+  &__total {
+    font-size: 13px;
+    display: inline-block;
+    line-height: 34px;
+    height: 34px;
   }
+}
 </style>

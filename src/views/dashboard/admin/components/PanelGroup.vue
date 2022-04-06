@@ -1,7 +1,7 @@
 <template>
   <el-row :gutter="40" class="panel-group">
     <el-col :xs="12" :sm="12" :lg="8" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('newVisitis')">
+      <div class="card-panel">
         <div class="card-panel-icon-wrapper icon-people">
           <svg-icon icon-class="peoples" class-name="card-panel-icon" />
         </div>
@@ -13,19 +13,6 @@
         </div>
       </div>
     </el-col>
-    <!-- <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('messages')">
-        <div class="card-panel-icon-wrapper icon-message">
-          <svg-icon icon-class="message" class-name="card-panel-icon" />
-        </div>
-        <div class="card-panel-description">
-          <div class="card-panel-text">
-            Messages
-          </div>
-          <count-to :start-val="0" :end-val="messages" :duration="3000" class="card-panel-num" />
-        </div>
-      </div>
-    </el-col> -->
     <el-col :xs="12" :sm="12" :lg="8" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-icon-wrapper icon-money">
@@ -40,7 +27,7 @@
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="8" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('shoppings')">
+      <div class="card-panel">
         <div class="card-panel-icon-wrapper icon-shopping">
           <svg-icon icon-class="search" class-name="card-panel-icon" />
         </div>
@@ -56,8 +43,8 @@
 </template>
 
 <script>
-import CountTo from 'vue-count-to'
-import { getCount } from '@/api/system/firstpage'
+import CountTo from 'vue-count-to';
+import { getCount } from '@/api/system/firstpage';
 
 export default {
   components: {
@@ -76,20 +63,17 @@ export default {
     }
   },
   created() {
-    this.getAllCount()
+    this.getAllCount();
   },
   methods: {
     getAllCount() {
       getCount().then(res => {
-        this.visiters = res.data[0]
+        this.visiters = res.data[0];
         // this.messages = res.data[1]
-        this.datas = res.data[2]
-        this.search = res.data[3]
+        this.datas = res.data[2];
+        this.search = res.data[3];
       })
     },
-    handleSetLineChartData(type) {
-      this.$emit('handleSetLineChartData', type)
-    }
   }
 }
 </script>
@@ -152,23 +136,6 @@ export default {
         background: #34bfa3
       }
     }
-
-    // .icon-people {
-    //   color: #40c9c6;
-    // }
-
-    // .icon-message {
-    //   color: #36a3f7;
-    // }
-
-    // .icon-money {
-    //   color: #f4516c;
-    // }
-
-    // .icon-shopping {
-    //   color: #34bfa3
-    // }
-
     .card-panel-icon-wrapper {
       float: left;
       margin: 14px 0 0 14px;

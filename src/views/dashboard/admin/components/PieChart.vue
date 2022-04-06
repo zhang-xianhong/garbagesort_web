@@ -3,10 +3,10 @@
 </template>
 
 <script>
-import echarts from 'echarts'
-import { selectType } from '@/api/garbage/question'
-require('echarts/theme/macarons') // echarts theme
-import resize from './mixins/resize'
+import echarts from 'echarts';
+import { selectType } from '@/api/garbage/question';
+require('echarts/theme/macarons'); // echarts theme
+import resize from './mixins/resize';
 
 export default {
   mixins: [resize],

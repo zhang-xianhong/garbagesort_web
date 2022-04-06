@@ -47,9 +47,9 @@ import LineChart from '@/views/dashboard/admin/components/LineChart'
 import RaddarChart from '@/views/dashboard/admin/components/RaddarChart'
 import PieChart from '@/views/dashboard/admin/components/PieChart'
 import BarChart from '@/views/dashboard/admin/components/BarChart'
-import TransactionTable from '@/views/dashboard/admin/components/TransactionTable'
-import TodoList from '@/views/dashboard/admin/components/TodoList'
-import BoxCard from '@/views/dashboard/admin/components/BoxCard'
+// import TransactionTable from '@/views/dashboard/admin/components/TransactionTable'
+// import TodoList from '@/views/dashboard/admin/components/TodoList'
+// import BoxCard from '@/views/dashboard/admin/components/BoxCard'
 import { selectType } from '@/api/garbage/question'
 
 const lineChartData = {
@@ -80,9 +80,9 @@ export default {
     RaddarChart,
     PieChart,
     BarChart,
-    TransactionTable,
-    TodoList,
-    BoxCard
+    // TransactionTable,
+    // TodoList,
+    // BoxCard
   },
   data() {
     return {

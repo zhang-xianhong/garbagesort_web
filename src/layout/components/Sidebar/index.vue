@@ -1,6 +1,5 @@
 <template>
   <div :class="{'has-logo' :showLogo}" class="sidebar-container">
-    <logo v-if="showLogo" :collapse="isCollapse" />
     <div class="sidebar-title">垃圾分类管理系统</div>
     <el-scrollbar wrap-class="scrollbar-wrapper">
       <el-menu
@@ -20,35 +19,35 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import Logo from './Logo'
-import SidebarItem from './SidebarItem'
-import variables from '@/styles/variables.scss'
+import { mapGetters } from 'vuex';
+import SidebarItem from './SidebarItem';
+import variables from '@/styles/variables.scss';
 
 export default {
-  components: { SidebarItem, Logo },
+  components: {
+    SidebarItem
+  },
   computed: {
     ...mapGetters([
       'menu_routes',
       'sidebar'
     ]),
     activeMenu() {
-      const route = this.$route
-      const { meta, path } = route
-      // if set path, the sidebar will highlight the path you set
+      const route = this.$route;
+      const { meta, path } = route;
       if (meta.activeMenu) {
-        return meta.activeMenu
+        return meta.activeMenu;
       }
-      return path
+      return path;
     },
     showLogo() {
-      return this.$store.state.settings.sidebarLogo
+      return this.$store.state.settings.sidebarLogo;
     },
     variables() {
-      return variables
+      return variables;
     },
     isCollapse() {
-      return !this.sidebar.opened
+      return !this.sidebar.opened;
     }
   }
 }

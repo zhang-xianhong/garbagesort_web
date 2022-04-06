@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 分页查询
 export function listUserForPage(query) {
   return request({
-    url: '/system/user/listUserForPage',
+    url: '/user/listUserForPage',
     method: 'get',
     params: query
   })
@@ -11,7 +11,7 @@ export function listUserForPage(query) {
 // 添加
 export function addUser(data) {
   return request({
-    url: '/system/user/addUser',
+    url: '/user/addUser',
     method: 'post',
     params: data
   })
@@ -19,7 +19,7 @@ export function addUser(data) {
 // 修改
 export function updateUser(data) {
   return request({
-    url: '/system/user/updateUser',
+    url: '/user/updateUser',
     method: 'put',
     params: data
   })
@@ -27,21 +27,22 @@ export function updateUser(data) {
 // 删除
 export function deleteUserByIds(id) {
   return request({
-    url: '/system/user/deleteUserByIds/' + id,
+    url: '/user/deleteUserByIds/' + id,
     method: 'delete'
   })
 }
 // 查询一个
 export function getUserById(id) {
   return request({
-    url: '/system/user/getUserById/' + id,
+    url: '/user/getUserById/' + id,
     method: 'get'
   })
 }
 // 重置用户密码
 export function resetPwd(userId) {
   return request({
-    url: '/system/user/resetPwd/' + userId,
+    url: '/user/resetPwd/' + userId,
     method: 'put'
   })
 }
+

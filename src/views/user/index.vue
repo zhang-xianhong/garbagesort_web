@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div class="user-container">
     <el-form ref="queryForm" :model="queryParams" :inline="true" label-width="68px">
       <el-row>
         <el-col :span="12" style="text-align: left;">
@@ -20,7 +20,7 @@
     <!-- <el-button type="danger" icon="el-icon-delete" size="mini" :disabled="multiple" @click="handleResetPwd">重置密码</el-button> -->
     <!-- <el-button type="success" icon="el-icon-thumb" size="mini" :disabled="single" @click="handleSelectRole">分配角色</el-button> -->
 
-    <el-table style="margin-top: 20px" v-loading="loading" :data="userTableList" @selection-change="handleSelectionChange">
+    <el-table style="margin-top: 20px" v-loading="loading" stripe :data="userTableList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="45" align="center" />
       <el-table-column type="expand">
         <template slot-scope="props">
@@ -40,7 +40,7 @@
           </el-form>
         </template>
       </el-table-column>
-      <el-table-column label="用户ID" align="center" prop="userId" />
+      <!-- <el-table-column label="用户ID" align="center" prop="userId" /> -->
       <el-table-column label="用户名称" width="120px" align="center" prop="userName" />
       <el-table-column label="手机号码【登陆身份】" width="180" align="center" prop="phone" />
       <el-table-column label="性别" align="center" prop="sex" :formatter="sexFormatter" />
@@ -213,7 +213,7 @@
   </div>
 </template>
 <script>
-import { listUserForPage, addUser, updateUser, getUserById, deleteUserByIds, resetPwd } from '@/api/user/user'
+import { listUserForPage, addUser, updateUser, getUserById, deleteUserByIds, resetPwd } from '@/api/user/user';
 export default {
   data() {
     return {
@@ -453,21 +453,22 @@ export default {
     }
   }
 }
-.el-dialog__footer {
-  margin-top: -20px;
-}
 </style>
 
 <style lang="scss" scoped>
-  .table-expand label {
-    width: 90px;
-    color: #99a9bf;
-  }
-  .table-expand .el-form-item {
-    margin-right: 0;
-    margin-bottom: 0;
-    width: 50%;
-  }
+.user-container {
+  padding: 32px;
+  background-color: #f2f2f2;
+}
+.table-expand label {
+  width: 90px;
+  color: #99a9bf;
+}
+.table-expand .el-form-item {
+  margin-right: 0;
+  margin-bottom: 0;
+  width: 50%;
+}
 .packaged-pagination {
   &::after {
     content: '';

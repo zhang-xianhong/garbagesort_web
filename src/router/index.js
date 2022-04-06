@@ -1,9 +1,8 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-Vue.use(Router)
+import Vue from 'vue';
+import Router from 'vue-router';
+Vue.use(Router);
 
-/* Layout */
-import Layout from '@/layout'
+import Layout from '@/layout';
 /**
  * constantRoutes 常量路由，这些路由由后台的数据控制是否显示
  */
@@ -51,7 +50,7 @@ export const constantRoutes = [
     children: [
       {
         path: 'dashboard',
-        component: () => import('@/views/dashboard/index'),
+        component: () => import('@/views/dashboard'),
         name: '首页',
         meta: { title: '管理首页', icon: 'el-icon-house', affix: true }
       }
@@ -187,13 +186,13 @@ export const asyncRoutes = [
     redirect: 'noRedirect',
     name: '/garbage',
     meta: {
-      title: '垃圾分类管理',
-      icon: 'example'
+      title: '垃圾管理',
+      icon: 'service'
     },
     children: [
       {
         path: 'question',
-        component: () => import('@/views/garbage/question/index'),
+        // component: () => import('@/views/garbage/question/index'),
         name: '/garbage/question',
         meta: { title: '题库管理', icon: 'edit' }
       },
@@ -211,19 +210,19 @@ export const asyncRoutes = [
     redirect: 'noRedirect',
     name: '/recognition',
     meta: {
-      title: '垃圾识别管理',
-      icon: 'nested'
+      title: '识别管理',
+      icon: 'config'
     },
     children: [
       {
         path: 'photo',
-        component: () => import('@/views/recognition/photo/index'),
+        // component: () => import('@/views/recognition/photo/index'),
         name: '/recognition/photo',
         meta: { title: '图像识别管理', icon: 'el-icon-camera' }
       },
       {
         path: 'speech',
-        component: () => import('@/views/recognition/speech/index'),
+        // component: () => import('@/views/recognition/speech/index'),
         name: '/recognition/speech',
         meta: { title: '语音识别管理', icon: 'el-icon-microphone' },
         hidden: true
@@ -244,7 +243,7 @@ export const asyncRoutes = [
     children: [
       {
         path: 'log_login',
-        component: () => import('@/views/system/loginInfo/index'),
+        component: () => import('@/views/loginInfo/index'),
         name: '/log/log_login',
         meta: {
           title: '登陆日志管理',
