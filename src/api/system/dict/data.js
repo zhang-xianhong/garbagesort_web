@@ -1,4 +1,4 @@
-import request from '@/utils/request'
+import request from '@/network/request'
 
 // 分页查询字典数据
 export function listForPage(query) {

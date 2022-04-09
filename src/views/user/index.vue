@@ -25,16 +25,16 @@
       <el-table-column type="expand">
         <template slot-scope="props">
           <el-form label-position="left" inline class="table-expand">
-            <el-form-item label="邮箱">
+            <el-form-item label="邮箱:">
               <span>{{ props.row.email }}</span>
             </el-form-item>
-            <el-form-item label="擅长">
+            <el-form-item label="擅长:">
               <span>{{ props.row.strong }}</span>
             </el-form-item>
-            <el-form-item label="荣耀">
+            <el-form-item label="荣耀:">
               <span>{{ props.row.honor }}</span>
             </el-form-item>
-            <el-form-item label="简介">
+            <el-form-item label="简介:">
               <span>{{ props.row.introduction }}</span>
             </el-form-item>
           </el-form>
@@ -168,7 +168,7 @@
           </el-col>
           <el-col :span="24">
             <el-form-item label="荣誉" prop="honor">
-              <el-input v-model="form.honor" type="textarea" placeholder="请输入用户相关荣誉" />
+              <el-input v-model="form.honor" type="textarea" placeholder="请输入用户荣誉" />
             </el-form-item>
           </el-col>
           <el-col :span="24">
@@ -213,7 +213,7 @@
   </div>
 </template>
 <script>
-import { listUserForPage, addUser, updateUser, getUserById, deleteUserByIds, resetPwd } from '@/api/user/user';
+import { listUserForPage, addUser, updateUser, getUserById, deleteUserByIds, resetPwd } from '@/api/user';
 export default {
   data() {
     return {
@@ -260,7 +260,7 @@ export default {
           { required: true, message: '用户名称不能为空', trigger: 'blur' }
         ],
         phone: [
-          { required: true, message: '电话号码不能为空', trigger: 'blur' },
+          { required: true, message: '手机号不能为空', trigger: 'blur' },
           {
             pattern: /^1[345678]\d{9}$/,
             message: '请输入正确的手机号码',
@@ -355,7 +355,8 @@ export default {
       })
     },
     handleDelete(row) {
-      const userIds = row.userId || this.ids
+      console.log('delete', row);
+      const userIds = row.userId || this.ids;
       this.$confirm('是否确定删除该用户数据？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',

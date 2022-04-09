@@ -49,13 +49,6 @@
       </el-row>
       <el-button :loading="loading" type="primary" style="width: 100%; height: 35px; margin-bottom: 70px;" @click.native.prevent="handleLogin">Login</el-button>
     </el-form>
-
-    <el-dialog title="Or connect with" :visible.sync="showDialog">
-      <div>
-        Can not be simulated on local, so please combine you own business simulation! ! !
-      </div>
-      <social-sign />
-    </el-dialog>
   </div>
 </template>
 
@@ -66,9 +59,9 @@ export default {
   data() {
     const validatePassword = (rule, value, callback) => {
       if (value.length < 4) {
-        callback(new Error('密码不能小于4位'))
+        callback(new Error('密码不能小于4位'));
       } else {
-        callback()
+        callback();
       }
     }
     return {
@@ -82,7 +75,6 @@ export default {
       passwordType: 'password',
       capsTooltip: false,
       loading: false,
-      showDialog: false,
       redirect: undefined,
       otherQuery: {}
     }
@@ -91,10 +83,10 @@ export default {
     $route: {
       handler: function(route) {
         console.log('route', route);
-        const query = route.query
+        const query = route.query;
         if (query) {
-          this.redirect = query.redirect
-          this.otherQuery = this.getOtherQuery(query)
+          this.redirect = query.redirect;
+          this.otherQuery = this.getOtherQuery(query);
         }
       },
       immediate: true
@@ -120,30 +112,30 @@ export default {
     },
     showPwd() {
       if (this.passwordType === 'password') {
-        this.passwordType = ''
+        this.passwordType = '';
       } else {
-        this.passwordType = 'password'
+        this.passwordType = 'password';
       }
       this.$nextTick(() => {
-        this.$refs.password.focus()
+        this.$refs.password.focus();
       })
     },
     // 执行登录逻辑
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          this.loading = true
+          this.loading = true;
           this.$store.dispatch('user/login', this.loginForm)
             .then(() => {
-              this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
-              this.loading = false
+              this.$router.push({ path: this.redirect || '/', query: this.otherQuery });
+              this.loading = false;
             })
             .catch(() => {
-              this.loading = false
+              this.loading = false;
             })
         } else {
-          console.log('error submit!!')
-          return false
+          console.log('error submit!!');
+          return false;
         }
       })
     },
@@ -151,10 +143,10 @@ export default {
       console.log('query', query);
       return Object.keys(query).reduce((acc, cur) => {
         if (cur !== 'redirect') {
-          acc[cur] = query[cur]
+          acc[cur] = query[cur];
         }
-        return acc
-      }, {})
+        return acc;
+      }, {});
     }
   }
 }
@@ -162,18 +154,10 @@ export default {
 
 <style lang="scss">
 /* 修复input 背景不协调 和光标变色 */
-
 $bg:#022322;
 $light_gray:#fff;
 $cursor: #fff;
 
-// @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
-//   .login-container .el-input input {
-//     color: $cursor;
-//   }
-// }
-
-/* reset element-ui css */
 .login-container {
   .el-input {
     display: inline-block;

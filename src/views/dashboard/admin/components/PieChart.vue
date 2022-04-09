@@ -31,21 +31,21 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      this.initChart()
+      this.initChart();
     })
   },
   beforeDestroy() {
     if (!this.chart) {
-      return
+      return;
     }
-    this.chart.dispose()
-    this.chart = null
+    this.chart.dispose();
+    this.chart = null;
   },
   methods: {
     initChart() {
       selectType().then(res => {
         console.log('selectType', res);
-        this.chart = echarts.init(this.$el, 'macarons')
+        this.chart = echarts.init(this.$el, 'macarons');
         this.chart.setOption({
           tooltip: {
             trigger: 'item',

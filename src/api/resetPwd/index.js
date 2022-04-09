@@ -1,4 +1,4 @@
-import request from '@/utils/request'
+import request from '@/network/request'
 
 export function sendMail(mobil) {
   return request({

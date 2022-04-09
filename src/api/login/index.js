@@ -1,4 +1,4 @@
-import request from '@/utils/request'
+import request from '@/network/request'
 // 登录
 export function login(data) {
   return request({

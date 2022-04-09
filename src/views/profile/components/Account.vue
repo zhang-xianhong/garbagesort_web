@@ -36,3 +36,10 @@ export default {
   }
 }
 </script>
+
+
+<style lang="scss" scoped>
+.el-form-item:last-child {
+  margin-top: 36px;
+}
+</style>

@@ -52,7 +52,7 @@ export default {
   },
   data() {
     return {
-      // 用户访问数量即登录次数，数据库表为sys_login_info
+      // 用户访问数量即登录次数，数据库表为login_info
       visiters: 0,
       // 短信发送总数 数据库表为sys_sms_log，此数据库可删除
       // messages: 0,

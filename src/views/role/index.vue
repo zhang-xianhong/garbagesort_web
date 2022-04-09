@@ -31,11 +31,11 @@
       <el-table-column label="状态" width="150" prop="status" align="center" :formatter="statusFormatter" />
       <el-table-column label="描述" align="center" prop="remark" width="200" />
       <el-table-column label="创建时间" align="center" prop="createTime" />
-      <el-table-column label="操作" align="center" width="250">
+      <el-table-column label="操作" align="center" width="290">
         <template slot-scope="scope">
           <el-button type="warning" icon="el-icon-edit" size="mini" @click="handleUpdate(scope.row)">编辑</el-button>
           <el-button type="danger" icon="el-icon-delete" size="mini" @click="handleDelete(scope.row)">删除</el-button>
-          <!-- <el-button type="text" icon="el-icon-thumb" size="mini" @click="handleSelectMenu(scope.row)">分配权限</el-button> -->
+          <el-button type="success" icon="el-icon-thumb" size="mini" @click="handleSelectMenu(scope.row)">分配权限</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -90,7 +90,7 @@
     </el-dialog>
 
     <!-- 分配权限和菜单弹出层开始 -->
-    <!-- <el-dialog
+    <el-dialog
       :title="title"
       :visible.sync="selectMenuOpen"
       width="400px"
@@ -110,12 +110,12 @@
         <el-button type="primary" @click="handleSelectMenuSubmit">确 定</el-button>
         <el-button @click="cancelSelectMenu">取 消</el-button>
       </span>
-    </el-dialog> -->
+    </el-dialog>
     <!-- 分配权限和菜单弹出层结束 -->
   </div>
 </template>
 <script>
-import { listRoleForPage, addRole, updateRole, getRoleById, deleteRoleByIds, saveRoleMenu } from '@/api/role/role';
+import { listRoleForPage, addRole, updateRole, getRoleById, deleteRoleByIds, saveRoleMenu } from '@/api/role';
 import { selectMenuTree, getMenuIdsByRoleId } from '@/api/system/menu'
 
 export default {
@@ -268,39 +268,39 @@ export default {
         status: '0'
       }
     },
-    // handleSelectMenu(row) {
-    //   this.currentRoleId = row.roleId || this.ids[0]
-    //   this.title = '分配权限和菜单'
-    //   this.selectMenuOpen = true
-    //   // 查询所有可用的菜单
-    //   selectMenuTree().then(res => {
-    //     this.menuOptions = this.handleTree(res.data, 'menuId')
-    //   })
-    //   // 根据角色ID查询当前角色拥有的哪些菜单权限
-    //   getMenuIdsByRoleId(this.currentRoleId).then(res => {
-    //     this.$refs.menu.setCheckedKeys(res.data)
-    //   })
-    // },
-    // // 保存角色和菜单权限的关系
-    // handleSelectMenuSubmit() {
-    //   // 获取选中的keys
-    //   const checkedKeys = this.$refs.menu.getCheckedKeys()
-    //   // 获取半选的keys
-    //   const halfCheckKeys = this.$refs.menu.getHalfCheckedKeys()
-    //   // 组合成最后的keys
-    //   const finalKey = halfCheckKeys.concat(checkedKeys)
-    //   saveRoleMenu(this.currentRoleId, finalKey).then(res => {
-    //     this.msgSuccess('分配成功')
-    //     this.selectMenuOpen = false
-    //   }).catch(() => {
-    //     this.msgSuccess('分配失败')
-    //   })
-    // },
-    // // 关闭分配权限和菜单的弹出层
-    // cancelSelectMenu() {
-    //   this.selectMenuOpen = false
-    //   this.menuOptions = []
-    // }
+    handleSelectMenu(row) {
+      this.currentRoleId = row.roleId || this.ids[0]
+      this.title = '分配权限和菜单'
+      this.selectMenuOpen = true
+      // 查询所有可用的菜单
+      selectMenuTree().then(res => {
+        this.menuOptions = this.handleTree(res.data, 'menuId')
+      })
+      // 根据角色ID查询当前角色拥有的哪些菜单权限
+      getMenuIdsByRoleId(this.currentRoleId).then(res => {
+        this.$refs.menu.setCheckedKeys(res.data)
+      })
+    },
+    // 保存角色和菜单权限的关系
+    handleSelectMenuSubmit() {
+      // 获取选中的keys
+      const checkedKeys = this.$refs.menu.getCheckedKeys()
+      // 获取半选的keys
+      const halfCheckKeys = this.$refs.menu.getHalfCheckedKeys()
+      // 组合成最后的keys
+      const finalKey = halfCheckKeys.concat(checkedKeys)
+      saveRoleMenu(this.currentRoleId, finalKey).then(res => {
+        this.msgSuccess('分配成功')
+        this.selectMenuOpen = false
+      }).catch(() => {
+        this.msgSuccess('分配失败')
+      })
+    },
+    // 关闭分配权限和菜单的弹出层
+    cancelSelectMenu() {
+      this.selectMenuOpen = false
+      this.menuOptions = []
+    }
   }
 }
 </script>

@@ -1,5 +1,5 @@
-import { asyncRoutes, constantRoutes, lastRoute } from '@/router/index'
-import { getMenus } from '@/api/user'
+import { asyncRoutes, constantRoutes, lastRoute } from '@/router/index';
+import { getMenus } from '@/api/login';
 
 const state = {
   routes: []

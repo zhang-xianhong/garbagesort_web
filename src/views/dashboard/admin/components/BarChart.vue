@@ -1,13 +1,13 @@
 <template>
-  <div :class="className" :style="{height:height,width:width}" />
+  <div :class="className" :style="{height: height, width: width}" />
 </template>
 
 <script>
-import echarts from 'echarts'
-require('echarts/theme/macarons') // echarts theme
-import resize from './mixins/resize'
-import { hotKeyword } from '@/api/system/firstpage'
-const animationDuration = 6000
+import echarts from 'echarts';
+require('echarts/theme/macarons'); // echarts theme
+import resize from './mixins/resize';
+import { hotKeyword } from '@/api/system/firstpage';
+const animationDuration = 6000;
 
 export default {
   mixins: [resize],
@@ -28,29 +28,29 @@ export default {
   data() {
     return {
       chart: null,
-      xData: ['', '', '', '', ''],
-      yData: [0, 0, 0, 0, 0]
+      xData: ['', '', '', '', '', ''],
+      yData: [0, 0, 0, 0, 0, 0]
     }
   },
   mounted() {
     this.$nextTick(() => {
-      this.initChart()
+      this.initChart();
     })
   },
   beforeDestroy() {
     if (!this.chart) {
-      return
+      return;
     }
-    this.chart.dispose()
-    this.chart = null
+    this.chart.dispose();
+    this.chart = null;
   },
   methods: {
     initChart() {
       hotKeyword().then(res => {
         console.log('hotKeyword', res);
-        this.chart = echarts.init(this.$el, 'macarons')
-        this.xData = res.data[0]
-        this.yData = res.data[1]
+        this.chart = echarts.init(this.$el, 'macarons');
+        this.xData = res.data[0];
+        this.yData = res.data[1];
         this.chart.setOption({
           tooltip: {
             trigger: 'axis',

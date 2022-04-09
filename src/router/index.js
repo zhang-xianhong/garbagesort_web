@@ -9,7 +9,7 @@ import Layout from '@/layout';
 export const constantRoutes = [
   {
     path: '/resetPwd',
-    component: () => import('@/views/resetPwd/index'),
+    component: () => import('@/views/resetPwd'),
     hidden: true
   },
   {
@@ -19,13 +19,13 @@ export const constantRoutes = [
     children: [
       {
         path: '/redirect/:path*',
-        component: () => import('@/views/redirect/index')
+        component: () => import('@/views/redirect')
       }
     ]
   },
   {
     path: '/login',
-    component: () => import('@/views/login/index'),
+    component: () => import('@/views/login'),
     hidden: true
   },
   {
@@ -64,7 +64,7 @@ export const constantRoutes = [
     children: [
       {
         path: 'index',
-        component: () => import('@/views/profile/index'),
+        component: () => import('@/views/profile'),
         name: 'Profile',
         meta: { title: '个人信息', icon: 'user', noCache: true }
       }
@@ -77,7 +77,7 @@ export const constantRoutes = [
     children: [
       {
         path: '/user/index',
-        component: () => import('@/views/user/index'),
+        component: () => import('@/views/user'),
         name: '用户管理',
         meta: {
           title: '用户管理',
@@ -192,7 +192,7 @@ export const asyncRoutes = [
     children: [
       {
         path: 'question',
-        // component: () => import('@/views/garbage/question/index'),
+        component: () => import('@/views/garbage/question/index'),
         name: '/garbage/question',
         meta: { title: '题库管理', icon: 'edit' }
       },
@@ -216,13 +216,13 @@ export const asyncRoutes = [
     children: [
       {
         path: 'photo',
-        // component: () => import('@/views/recognition/photo/index'),
+        component: () => import('@/views/recognition/photo/index'),
         name: '/recognition/photo',
         meta: { title: '图像识别管理', icon: 'el-icon-camera' }
       },
       {
         path: 'speech',
-        // component: () => import('@/views/recognition/speech/index'),
+        component: () => import('@/views/recognition/speech/index'),
         name: '/recognition/speech',
         meta: { title: '语音识别管理', icon: 'el-icon-microphone' },
         hidden: true
@@ -272,19 +272,19 @@ export const asyncRoutes = [
   }
 ]
 export const lastRoute = [
-  {
-    path: '/dict',
-    component: Layout,
-    hidden: true,
-    children: [
-      {
-        path: 'data/:dictId(\\d+)',
-        component: () => import('@/views/system/dict/data'),
-        name: 'data',
-        meta: { title: '数据字典', icon: 'list' }
-      }
-    ]
-  },
+  // {
+  //   path: '/dict',
+  //   component: Layout,
+  //   hidden: true,
+  //   children: [
+  //     {
+  //       path: 'data/:dictId(\\d+)',
+  //       component: () => import('@/views/system/dict/data'),
+  //       name: 'data',
+  //       meta: { title: '数据字典', icon: 'list' }
+  //     }
+  //   ]
+  // },
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]

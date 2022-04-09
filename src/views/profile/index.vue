@@ -5,7 +5,7 @@
         <el-col :span="6" :xs="24">
           <user-card :user="user" />
         </el-col>
-        <el-col :span="18" :xs="24" style="height: 539px;">
+        <el-col :span="18" :xs="24" style="height: 520px;">
           <el-card>
             <el-tabs v-model="activeTab">
               <el-tab-pane label="Account" name="account">
@@ -23,10 +23,10 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import UserCard from './components/UserCard'
-import Activity from './components/Activity'
-import Account from './components/Account'
+import { mapGetters } from 'vuex';
+import UserCard from './components/UserCard';
+import Activity from './components/Activity';
+import Account from './components/Account';
 
 export default {
   name: 'Profile',
@@ -49,7 +49,7 @@ export default {
     ])
   },
   created() {
-    this.getUser()
+    this.getUser();
   },
   methods: {
     getUser() {
@@ -66,3 +66,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.el-card.is-always-shadow {
+  height: 100%;
+}
+</style>

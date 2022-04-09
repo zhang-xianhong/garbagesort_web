@@ -1,4 +1,4 @@
-import request from '@/utils/request'
+import request from '@/network/request';
 // 获取本周每天的登录次数
 // export function getWeekDayData() {
 //   return request({
