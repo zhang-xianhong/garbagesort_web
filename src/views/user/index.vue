@@ -179,8 +179,8 @@
         </el-row>
       </el-form>
       <span slot="footer">
-        <el-button type="primary" @click="handleSubmit">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="handleSubmit">确 定</el-button>
       </span>
     </el-dialog>
 

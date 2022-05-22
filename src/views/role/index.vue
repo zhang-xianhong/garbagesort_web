@@ -93,8 +93,7 @@
     <el-dialog
       :title="title"
       :visible.sync="selectMenuOpen"
-      width="400px"
-      center
+      width="520px"
       append-to-body
     >
       <el-tree
@@ -107,8 +106,8 @@
         :props="{id:'menuId',children:'children',label:'menuName'}"
       />
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="handleSelectMenuSubmit">确 定</el-button>
         <el-button @click="cancelSelectMenu">取 消</el-button>
+        <el-button type="primary" @click="handleSelectMenuSubmit">确 定</el-button>
       </span>
     </el-dialog>
     <!-- 分配权限和菜单弹出层结束 -->

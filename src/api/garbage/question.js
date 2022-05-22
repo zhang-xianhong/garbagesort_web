@@ -9,6 +9,7 @@ export function listQuest(query) {
   })
 }
 
+// 查找不同类型搜索次数
 export function selectType(query) {
   return request({
     url: '/garbage/question/selectType',

@@ -209,10 +209,10 @@ export const asyncRoutes = [
     component: Layout,
     redirect: 'noRedirect',
     name: '/recognition',
-    meta: {
-      title: '识别管理',
-      icon: 'config'
-    },
+    // meta: {
+    //   title: '识别管理',
+    //   icon: 'config'
+    // },
     children: [
       {
         path: 'photo',
@@ -220,13 +220,13 @@ export const asyncRoutes = [
         name: '/recognition/photo',
         meta: { title: '图像识别管理', icon: 'el-icon-camera' }
       },
-      {
-        path: 'speech',
-        component: () => import('@/views/recognition/speech/index'),
-        name: '/recognition/speech',
-        meta: { title: '语音识别管理', icon: 'el-icon-microphone' },
-        hidden: true
-      }
+      // {
+      //   path: 'speech',
+      //   component: () => import('@/views/recognition/speech/index'),
+      //   name: '/recognition/speech',
+      //   meta: { title: '语音识别管理', icon: 'el-icon-microphone' },
+      //   hidden: true
+      // }
     ]
   },
   {

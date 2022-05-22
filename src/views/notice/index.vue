@@ -17,25 +17,48 @@
           <el-button type="primary" icon="el-icon-plus" size="mini" @click="handleAdd" style="width: 90px">新增</el-button>
         </el-col>
       </el-row>
-    </el-form>
 
     <el-table style="margin-top: 20px" v-loading="loading" stripe :data="noticeTableList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" style="font-weight: bold" />
+      <!-- <el-table-column label="选项" type="index" :index="myIndex" /> -->
       <!-- <el-table-column label="公告ID" align="center" prop="noticeId" width="120px" /> -->
-      <el-table-column label="公告标题" align="center" prop="noticeTitle" />
-      <el-table-column label="公告类型" prop="noticeType" align="center" :formatter="noticeTypeFormatter" width="130px" />
-      <el-table-column label="描述" prop="noticeContent" align="center" width="130px" />
-      <el-table-column label="状态" prop="status" align="center" :formatter="statusFormatter" width="130px" />
-      <el-table-column label="发布者" align="center" prop="createBy" />
-      <el-table-column label="创建时间" align="center" prop="createTime" />
-      <el-table-column label="操作" align="center" width="268">
+      <el-table-column label="公告标题" align="center" prop="noticeTitle"  width="150"/>
+      <el-table-column label="公告类型" prop="noticeType" align="center" :formatter="noticeTypeFormatter" width="130" />
+      <el-table-column label="描述" prop="noticeContent" align="center" width="200" />
+      <el-table-column label="状态" prop="status" align="center" :formatter="statusFormatter" width="100" />
+      <el-table-column label="发布者" align="center" prop="createBy" width="150"/>
+      <el-table-column label="创建时间" align="center" prop="createTime" width="180"/>
+      <el-table-column label="操作" align="center">
         <template slot-scope="scope">
           <el-button type="success" icon="el-icon-view" size="mini" @click="handleView(scope.row)">详情</el-button>
           <el-button type="warning" icon="el-icon-edit" size="mini" @click="handleUpdate(scope.row)">编辑</el-button>
           <el-button type="danger" icon="el-icon-delete" size="mini" @click="handleDelete(scope.row)">删除</el-button>
         </template>
       </el-table-column>
+      <!-- <el-table-column label="选项">
+        <template slot-scope="scope">
+          <el-form-item>
+            <el-radio-group v-model.number="queryParams.bodychoose[scope.row.noticeId]" size="mini" @change="onChange">
+            <el-radio
+              v-for="(item, index) in classOptions" :key="index" :label="item.value">
+              {{item.label}}</el-radio>
+          </el-radio-group>
+          </el-form-item>
+        </template>
+      </el-table-column> -->
     </el-table>
+    <!-- <el-form-item>
+      <el-button @click="cancel">取 消</el-button>
+      <el-button type="primary" @click="onSave">保 存</el-button>
+    </el-form-item> -->
+    <!-- <el-form-item>
+      <el-radio-group v-model.number="queryParams.bodychoose" size="mini" @change="onChange">
+      <el-radio
+        v-for="(item, index) in classOptions" :key="index" :label="item.value">
+        {{item.label}}</el-radio>
+    </el-radio-group>
+    </el-form-item> -->
+  </el-form>
 
     <div class="packaged-pagination">
       <span class="packaged-pagination__total" :total="total">共 {{ total }} 条</span>
@@ -169,10 +192,14 @@ export default {
         noticeTitle: undefined,
         createBy: undefined,
         noticeType: undefined,
-        status: undefined
+        status: undefined,
+        bodychoose: [
+          // 1, 2, 10
+        ]
       },
       // 表单数据
-      form: {},
+      form: {
+      },
       // 表单校验
       rules: {
         noticeTitle: [
@@ -182,7 +209,28 @@ export default {
       // 查看内容的弹出层
       noticeContentOpen: false,
       // 查看内容
-      noticeContent: undefined
+      noticeContent: undefined,
+      classOptions: [
+        {
+        label: "没有",
+        value: 1
+      },
+      {
+        label: "很少",
+        value: 2
+      },
+      {
+        label: "有时",
+        value: 3
+      },
+      {
+        label: "经常",
+        value: 4
+      },
+      {
+        label: "总是",
+        value: 5
+      }],
     }
   },
   // 勾子
@@ -199,6 +247,15 @@ export default {
   },
   // 方法
   methods: {
+    onSave() {
+      console.log(11111111, this.queryParams);
+    },
+    myIndex(index) {
+      return index * 1;
+    },
+    onChange(value) {
+      console.log('onChange', value);
+    },
     // 查询表格数据
     getNoticeList() {
       this.loading = true // 打开遮罩
@@ -327,7 +384,7 @@ export default {
         noticeContent: undefined,
         noticeType: '0',
         status: '0',
-        remark: undefined
+        remark: undefined,
       }
     },
     // 打开修改的弹出层
@@ -336,7 +393,7 @@ export default {
       this.noticeContentOpen = true
       this.noticeContent = row.noticeContent
     }
-  }
+  },
 }
 </script>
 

@@ -70,8 +70,9 @@ export default {
       getCount().then(res => {
         this.visiters = res.data[0];
         // this.messages = res.data[1]
-        this.datas = res.data[2];
-        this.search = res.data[3];
+        this.datas = res.data[1];
+        this.search = res.data[2];
+        // console.log('s', res);
       })
     },
   }

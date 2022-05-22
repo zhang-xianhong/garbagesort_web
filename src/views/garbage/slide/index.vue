@@ -4,7 +4,7 @@
       <el-row>
         <el-col :span="12" style="text-align: left;">
           <el-select
-            v-model="queryParams.userId"
+            v-model="queryParams.status"
             placeholder="可用状态"
             clearable
             size="small"
@@ -42,7 +42,7 @@
         </template>
       </el-table-column>
       <el-table-column label="图片地址" prop="imageUrl" align="center" />
-      <el-table-column label="状态" prop="userId" align="center" :formatter="statusFormatter" />
+      <el-table-column label="状态" prop="status" align="center" :formatter="statusFormatter" />
       <!-- <el-table-column label="排序" align="center" prop="sortId" /> -->
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
@@ -65,7 +65,6 @@
       />
     </div>
 
-    <!-- 新建编辑 -->
     <el-dialog
       :title="title"
       :visible.sync="open"
@@ -75,8 +74,8 @@
       <el-form ref="form" :model="form" label-width="100px">
         <el-row>
           <el-col>
-            <el-form-item label="状态" prop="userId" required="true">
-              <el-radio-group v-model="form.userId">
+            <el-form-item label="状态" prop="status" required="true">
+              <el-radio-group v-model="form.status">
                 <el-radio
                   v-for="item in statusOptions"
                   :key="item.dictValue"
@@ -94,7 +93,6 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <!-- 上传组件 -->
         <el-row>
           <el-col>
             <el-form-item label="图片" prop="imageUrl">
@@ -133,7 +131,7 @@
 </template>
 
 <script>
-import { listSlideForPage, addSlide, updateSlide, getSlideById, deleteSlideByIds } from '@/api/garbage/slide'
+import { listSlideForPage, addSlide, updateSlide, getSlideById, deleteSlideByIds } from '@/api/garbage/slide';
 import { getToken } from '@/utils/auth';
 export default {
   data() {
@@ -156,7 +154,7 @@ export default {
       form: {
         imageUrl: undefined,
         sortId: '0',
-        userId: '0',
+        status: '0',
         skipUrl: undefined
       },
       uploadPath: undefined,
@@ -194,7 +192,8 @@ export default {
       this.getSlideList();
     },
     handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.slide);
+      console.log('selection', selection);
+      this.ids = selection.map(item => item.swiperId);
       this.single = selection.length !== 1;
       this.multiple = !selection.length;
     },
@@ -207,7 +206,7 @@ export default {
       this.getSlideList();
     },
     statusFormatter(row) {
-      return this.selectDictLabel(this.statusOptions, row.userId);
+      return this.selectDictLabel(this.statusOptions, row.status);
     },
     handleAdd() {
       this.open = true;
@@ -216,27 +215,27 @@ export default {
     },
     handleUpdate(row) {
       this.title = '修改轮播图';
-      const slide = row.slide || this.ids;
+      const swiperId = row.swiperId || this.ids;
       this.open = true;
       this.reset();
-      // 根据slide查询一个
+      // 根据swiperId查询一个
       this.loading = true
-      getSlideById(slide).then(res => {
+      getSlideById(swiperId).then(res => {
         this.form = res.data;
-        this.form.userId = '' + res.data.userId;
+        this.form.status = '' + res.data.status;
         this.fileList = [{ 'url': res.data.imageUrl }];
         this.loading = false;
       })
     },
     handleDelete(row) {
-      const slides = row.slide || this.ids;
+      const swiperIds = row.swiperId || this.ids;
       this.$confirm('此操作将永久删除该轮播图, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
         this.loading = true;
-        deleteSlideByIds(slides).then(res => {
+        deleteSlideByIds(swiperIds).then(res => {
           this.loading = false;
           this.msgSuccess('删除成功');
           this.getSlideList();
@@ -253,7 +252,7 @@ export default {
       this.$refs['form'].validate((valid) => {
         if (valid) {
           this.loading = true
-          if (this.form.slide === undefined) {
+          if (this.form.swiperId === undefined) {
             addSlide(this.form).then(res => {
               this.msgSuccess('保存成功');
               this.loading = false;
@@ -284,7 +283,7 @@ export default {
       this.form = {
         imageUrl: undefined,
         sortId: '0',
-        userId: '0',
+        status: '0',
         skipUrl: undefined
       };
     },

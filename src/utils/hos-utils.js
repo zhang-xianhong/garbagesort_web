@@ -8,7 +8,7 @@ export function resetForm(refName) {
 }
 // 把日期范围构造成beginTime和endTime
 export function addDateRange(params, dateRange) {
-  var search = params
+  let search = params
   search.beginTime = ''
   search.endTime = ''
   if (dateRange != null && dateRange !== '' && dateRange !== undefined) {
@@ -19,7 +19,7 @@ export function addDateRange(params, dateRange) {
 }
 // 状态翻译 datas是当前状态数据列表 value要翻译的值
 export function selectDictLabel(datas, value) {
-  var actions = []
+  let actions = []
   Object.keys(datas).map((key) => {
     if (datas[key].dictValue === value) {
       actions.push(datas[key].dictLabel)

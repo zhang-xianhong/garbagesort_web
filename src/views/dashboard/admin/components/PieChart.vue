@@ -49,7 +49,6 @@ export default {
         this.chart.setOption({
           tooltip: {
             trigger: 'item',
-            formatter: '{a} <br/>{b} : {c} ({d}%)'
           },
           title: {
             text: '垃圾类型分类',

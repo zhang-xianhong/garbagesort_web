@@ -2,7 +2,7 @@
   <div class="dashboard-container">
     <panel-group />
     <el-row :gutter="32">
-      <!-- 不同类型垃圾的搜索次数，keyword_hot.keyword = garbage_store.garbage_name -->
+      <!-- 不同类型垃圾的搜索次数总和，keyword_hot.keyword = garbage_store.garbage_name -->
       <el-col :xs="24" :sm="24" :lg="12">
         <div class="chart-wrapper">
           <pie-chart />

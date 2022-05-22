@@ -48,24 +48,23 @@
       <el-table-column label="登录时间" align="center" prop="loginTime" />
       <el-table-column label="操作" align="center" width="150">
         <template slot-scope="scope">
-          <el-button v-if="scope.row.userId !== 1" type="warning" icon="el-icon-delete" size="mini" @click="handleDelete(scope.row)">删除</el-button>
+          <el-button v-if="scope.row.userId !== 1" type="danger" icon="el-icon-delete" size="mini" @click="handleDelete(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <!-- 数据表格结束 -->
 
-    <!-- 分页控件开始 -->
-    <el-pagination
-      v-show="total>0"
-      :current-page="queryParams.pageNum"
-      :page-sizes="[5,10,20,30]"
-      :page-size="queryParams.pageSize"
-      layout="total,sizes,prev,pager,next,jumper"
-      :total="total"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-    />
-    <!-- 分页控件结束 -->
+    <div class="packaged-pagination">
+      <span class="packaged-pagination__total" :total="total">共 {{ total }} 条</span>
+      <el-pagination
+        :current-page="queryParams.pageNum"
+        :page-sizes="[5, 10, 20, 30]"
+        :page-size="queryParams.pageSize"
+        :total="total"
+        layout="total, sizes, prev, pager, next, jumper"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+      />
+    </div>
   </div>
 </template>
 <script>
@@ -201,3 +200,34 @@ export default {
   }
 }
 </script>
+
+
+<style lang="scss">
+.packaged-pagination {
+  height: 50px;
+  padding: 8px;
+  width: 100%;
+  color: black;
+  .el-pagination {
+    float: right;
+    .el-pagination__total {
+      display: none;
+    }
+  }
+}
+</style>
+
+<style lang="scss" scoped>
+.packaged-pagination {
+  &::after {
+    content: '';
+    clear: both;
+  }
+  &__total {
+    font-size: 13px;
+    display: inline-block;
+    line-height: 34px;
+    height: 34px;
+  }
+}
+</style>

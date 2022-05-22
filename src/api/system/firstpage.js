@@ -13,7 +13,7 @@ export function getCount() {
     method: 'get'
   })
 }
-// 获取前五的热词
+// 获取前六的热词
 export function hotKeyword() {
   return request({
     url: '/system/fistPageInfo/hotKeyword',
