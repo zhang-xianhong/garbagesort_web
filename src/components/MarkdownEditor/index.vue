@@ -43,7 +43,7 @@ export default {
     language: {
       type: String,
       required: false,
-      default: 'en_US' // https://github.com/nhnent/tui.editor/tree/master/src/js/langs
+      default: 'en_US'
     }
   },
   data() {

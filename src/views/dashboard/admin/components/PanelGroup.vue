@@ -54,8 +54,6 @@ export default {
     return {
       // 用户访问数量即登录次数，数据库表为login_info
       visiters: 0,
-      // 短信发送总数 数据库表为sys_sms_log，此数据库可删除
-      // messages: 0,
       // 总数据条数 数据库表为garbage_store
       datas: 0,
       // 不同种类垃圾搜索次数 数据库表为keyword_result
@@ -69,7 +67,6 @@ export default {
     getAllCount() {
       getCount().then(res => {
         this.visiters = res.data[0];
-        // this.messages = res.data[1]
         this.datas = res.data[1];
         this.search = res.data[2];
         // console.log('s', res);

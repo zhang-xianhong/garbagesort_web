@@ -1,14 +1,14 @@
 import router from './router'
 import store from './store'
 import { Message } from 'element-ui'
-import NProgress from 'nprogress' // progress bar
-import 'nprogress/nprogress.css' // progress bar style
-import { getToken } from '@/utils/auth' // get token from cookie
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
+import { getToken } from '@/utils/auth'
 import getPageTitle from '@/utils/get-page-title'
 
-NProgress.configure({ showSpinner: false }) // NProgress Configuration
+NProgress.configure({ showSpinner: false })
 
-const whiteList = ['/login', '/auth-redirect', '/resetPwd'] // no redirect whitelist
+const whiteList = ['/login', '/auth-redirect', '/resetPwd']
 
 router.beforeEach(async(to, from, next) => {
   // start progress bar
@@ -25,7 +25,7 @@ router.beforeEach(async(to, from, next) => {
     if (to.path === '/login') {
       // 如果已登录，转到首页
       next({ path: '/' })
-      NProgress.done() // hack: https://github.com/PanJiaChen/vue-element-admin/pull/2939
+      NProgress.done()
     } else {
       // 确定用户是否已通过 getInfo 获得其用户
       const hasName = store.getters.name !== ''
@@ -55,10 +55,8 @@ router.beforeEach(async(to, from, next) => {
   } else {
     // 如果没有 token 就跳转到登陆页
     if (whiteList.indexOf(to.path) !== -1) {
-      // in the free login whitelist, go directly
       next()
     } else {
-      // other pages that do not have permission to access are redirected to the login page.
       next(`/login?redirect=${to.path}`)
       NProgress.done()
     }

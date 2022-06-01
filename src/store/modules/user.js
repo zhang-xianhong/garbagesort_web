@@ -47,7 +47,7 @@ const actions = {
   // 用户登录
   login({ commit }, userInfo) {
     // 从 userInfo 中取出password和username
-    const { username, password } = userInfo
+    const { username, password } = userInfo;
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
         const { token } = response;
@@ -70,7 +70,6 @@ const actions = {
         if (!username) {
           reject('请登录.')
         }
-
         commit('SET_ROLES', roles)// 用户角色
         commit('SET_NAME', username)// 用户名
         commit('SET_AVATAR', picture)// 头像
@@ -99,11 +98,7 @@ const actions = {
         commit('SET_HONOR', [])
         removeToken()
         resetRouter()
-
-        // reset visited views and cached views
-        // to fixed https://github.com/PanJiaChen/vue-element-admin/issues/2485
         dispatch('tagsView/delAllViews', null, { root: true })
-
         resolve()
       }).catch(error => {
         reject(error)

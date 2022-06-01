@@ -32,19 +32,13 @@
         </el-col>
       </el-row>
     </el-form>
-    <!-- <el-button type="warning" icon="el-icon-thumb" size="mini" @click="handleClearInfo">清空</el-button> -->
 
     <el-table style="margin-top: 20px" stripe v-loading="loading" border :data="loginInfoTableList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <!-- <el-table-column label="日志ID" align="center" prop="infoId" /> -->
       <el-table-column label="用户名称" align="center" prop="userName"/>
       <el-table-column label="登录帐号" align="center" prop="loginAccount" />
       <el-table-column label="登录IP" align="center" prop="ipAddr" />
-      <!-- <el-table-column label="登陆地址" align="center" prop="loginLocation" /> -->
-      <!-- <el-table-column label="浏览器" width="140" align="center" prop="browser" /> -->
-      <!-- <el-table-column label="操作系统" width="140" align="center" prop="os" /> -->
       <el-table-column label="登录状态" prop="loginStatus" align="center" :formatter="statusFormatter" />
-      <!-- <el-table-column label="用户类型" prop="loginType" align="center" :formatter="loginTypeFormatter" /> -->
       <el-table-column label="登录时间" align="center" prop="loginTime" />
       <el-table-column label="操作" align="center" width="150">
         <template slot-scope="scope">

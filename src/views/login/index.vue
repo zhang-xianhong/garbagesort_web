@@ -129,8 +129,7 @@ export default {
             .then(() => {
               this.$router.push({ path: this.redirect || '/', query: this.otherQuery });
               this.loading = false;
-            })
-            .catch(() => {
+            }).catch(() => {
               console.log("Error");
               this.loading = false;
               this.msgError("用户名或密码不正确!");

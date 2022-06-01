@@ -17,8 +17,6 @@
         </el-col>
       </el-row>
     </el-form>
-    <!-- <el-button type="danger" icon="el-icon-delete" size="mini" :disabled="multiple" @click="handleResetPwd">重置密码</el-button> -->
-    <!-- <el-button type="success" icon="el-icon-thumb" size="mini" :disabled="single" @click="handleSelectRole">分配角色</el-button> -->
 
     <el-table style="margin-top: 20px" v-loading="loading" stripe :data="userTableList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="45" align="center" />
@@ -40,7 +38,6 @@
           </el-form>
         </template>
       </el-table-column>
-      <!-- <el-table-column label="用户ID" align="center" prop="userId" /> -->
       <el-table-column label="用户名称" width="120px" align="center" prop="userName" />
       <el-table-column label="手机号码【登陆身份】" width="180" align="center" prop="phone" />
       <el-table-column label="性别" align="center" prop="sex" :formatter="sexFormatter" />
@@ -184,32 +181,6 @@
       </span>
     </el-dialog>
 
-    <!-- <el-dialog
-      :title="title"
-      :visible.sync="selectRoleOpen"
-      width="900px"
-      center
-      append-to-body
-    >
-      <el-table
-        ref="roleListTable"
-        v-loading="loading"
-        border
-        :data="roleTableList"
-        @selection-change="handleRoleTableSelectionChange"
-      >
-        <el-table-column type="selection" width="55" align="center" />
-        <el-table-column label="角色ID" align="center" prop="roleId" />
-        <el-table-column label="角色名称" align="center" prop="roleName" />
-        <el-table-column label="权限编码" align="center" prop="roleCode" />
-        <el-table-column label="备注" align="center" prop="remark" />
-        <el-table-column label="创建时间" align="center" prop="createTime" />
-      </el-table>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="handleSaveRoleUserSubmit">确 定</el-button>
-        <el-button @click="cancelRoleUser">取 消</el-button>
-      </span>
-    </el-dialog> -->
   </div>
 </template>
 <script>
@@ -272,6 +243,7 @@ export default {
   },
   created() {
     // 使用全局的根据字典类型查询字典数据的方法查询字典数据
+    // 状态
     this.getDataByType('sys_normal_disable').then(res => {
       this.statusOptions = res.data;
     })

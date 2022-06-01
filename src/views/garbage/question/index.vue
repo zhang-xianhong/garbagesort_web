@@ -38,7 +38,6 @@
 
     <el-table style="margin-top: 20px" v-loading="loading" border stripe :data="questionTableList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <!-- <el-table-column label="垃圾ID" align="center" prop="garbageId" /> -->
       <el-table-column label="垃圾名称" align="center" prop="garbageName" />
       <el-table-column label="垃圾类型" align="center" prop="garbageType" :formatter="questionFormatter" />
       <el-table-column label="解析" align="center" prop="analysis" />

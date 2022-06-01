@@ -20,11 +20,8 @@
       </el-row>
     </el-form>
 
-    <!-- <el-button type="warning" icon="el-icon-thumb" size="mini" :disabled="single" @click="handleSelectMenu">分配权限</el-button> -->
-
     <el-table style="margin-top: 20px" v-loading="loading" :row-class-name="tableRowClassName" :data="roleTableList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <!-- <el-table-column label="角色ID" width="86" align="center" prop="roleId" /> -->
       <el-table-column label="角色名称" align="center" prop="roleName" width="150" />
       <el-table-column label="身份标识" align="center" prop="roleCode" width="150" />
       <!-- <el-table-column label="显示顺序" width="130" align="center" prop="roleSort" /> -->

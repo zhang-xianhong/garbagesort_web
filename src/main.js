@@ -2,13 +2,13 @@ import Vue from 'vue';
 
 import Cookies from 'js-cookie';
 
-import 'normalize.css/normalize.css'; // a modern alternative to CSS resets
+import 'normalize.css/normalize.css';
 
 import moment from 'moment'; // 日期格式化类
 
-import Element from 'element-ui';
+import Element from 'element-ui'; // ElementUI
 import './styles/element-variables.scss';
-// import enLang from 'element-ui/lib/locale/lang/en'// 如果使用中文语言包请默认支持，无需额外引入，请删除该依赖
+// import enLang from 'element-ui/lib/locale/lang/en'// 如果使用中文语言包请默认支持，无需额外引入
 
 import '@/styles/index.scss'; // global css
 
@@ -29,7 +29,7 @@ import { getDataByType } from '@/api/system/dict/data';
 Vue.prototype.resetForm = resetForm;
 Vue.prototype.addDateRange = addDateRange;
 Vue.prototype.selectDictLabel = selectDictLabel;
-Vue.prototype.getDataByType = getDataByType; // 加载全局的根据字典类型查询字典的方法[基本每个页面都要使用]
+Vue.prototype.getDataByType = getDataByType; // 加载全局的根据字典类型查询字典的方法
 Vue.prototype.handleTree = handleTree;
 Vue.prototype.moment = moment;
 
@@ -46,10 +46,10 @@ Vue.prototype.msgInfo = function(msg) {
 
 Vue.use(Element, {
   size: Cookies.get('size') || 'medium', // set element-ui default size
-  // locale: enLang // 如果使用中文，无需设置，请删除
+  // locale: enLang // 使用英文
 });
 
-// register global utility filters
+// 注册全局过滤器
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key]);
 });

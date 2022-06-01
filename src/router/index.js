@@ -121,65 +121,6 @@ export const constantRoutes = [
 ]
 // 异步路由
 export const asyncRoutes = [
-  // {
-  //   path: '/system',
-  //   component: Layout,
-  //   redirect: 'noRedirect',
-  //   alwaysShow: true,
-  //   name: '/system',
-  //   meta: {
-  //     title: '系统管理',
-  //     icon: 'lock'
-  //   },
-  //   children: [
-  //     // {
-  //     //   path: 'user',
-  //     //   component: () => import('@/views/system/user/index'),
-  //     //   name: '/system/user',
-  //     //   meta: {
-  //     //     title: '用户管理',
-  //     //     icon: 'user'
-  //     //   },
-  //     // },
-  //     // {
-  //     //   path: 'role',
-  //     //   component: () => import('@/views/system/role/index'),
-  //     //   name: '/system/role',
-  //     //   meta: {
-  //     //     title: '角色管理',
-  //     //     icon: 'tab'
-  //     //   }
-  //     // },
-  //     {
-  //       path: 'menu',
-  //       component: () => import('@/views/system/menu/index'),
-  //       name: '/system/menu',
-  //       meta: {
-  //         title: '菜单管理',
-  //         icon: 'bug'
-  //       }
-  //     },
-  //     {
-  //       path: 'dict',
-  //       component: () => import('@/views/system/dict/type'),
-  //       name: '/system/dict',
-  //       meta: {
-  //         title: '字典管理',
-  //         icon: 'zip'
-  //       }
-  //     },
-  //     {
-  //       path: 'notice',
-  //       component: () => import('@/views/system/notice/index'),
-  //       name: '/system/notice',
-  //       meta: {
-  //         title: '通知公告',
-  //         icon: 'theme'
-  //       }
-  //     }
-  //   ]
-  // },
-
   {
     path: '/garbage',
     component: Layout,
@@ -201,7 +142,13 @@ export const asyncRoutes = [
         component: () => import('@/views/garbage/slide/index'),
         name: '/garbage/slide',
         meta: { title: '轮播图管理', icon: 'list' }
-      }
+      },
+      // {
+      //   path: 'keyword',
+      //   component: () => import('@/views/garbage/keyword/index'),
+      //   name: '/garbage/keyword',
+      //   meta: { title: '热门搜索管理', icon: 'edit' }
+      // }
     ]
   },
   {
@@ -209,10 +156,6 @@ export const asyncRoutes = [
     component: Layout,
     redirect: 'noRedirect',
     name: '/recognition',
-    // meta: {
-    //   title: '识别管理',
-    //   icon: 'config'
-    // },
     children: [
       {
         path: 'photo',
@@ -220,19 +163,11 @@ export const asyncRoutes = [
         name: '/recognition/photo',
         meta: { title: '图像识别管理', icon: 'el-icon-camera' }
       },
-      // {
-      //   path: 'speech',
-      //   component: () => import('@/views/recognition/speech/index'),
-      //   name: '/recognition/speech',
-      //   meta: { title: '语音识别管理', icon: 'el-icon-microphone' },
-      //   hidden: true
-      // }
     ]
   },
   {
     path: '/log',
     component: Layout,
-    // redirect: 'noRedirect',
     redirect: '/log_login',
     alwaysShow: true,
     name: '/log',
@@ -250,42 +185,11 @@ export const asyncRoutes = [
           icon: 'user'
         }
       },
-      // {
-      //   path: 'log_opt',
-      //   component: () => import('@/views/system/operLog/index'),
-      //   name: '/log/log_opt',
-      //   meta: {
-      //     title: '操作日志管理',
-      //     icon: 'edit'
-      //   }
-      // },
-      // {
-      //   path: 'sms',
-      //   component: () => import('@/views/system/sms/index'),
-      //   name: '/log/sms',
-      //   meta: {
-      //     title: '短信日志管理',
-      //     icon: 'message'
-      //   }
-      // }
     ]
   }
 ]
 export const lastRoute = [
-  // {
-  //   path: '/dict',
-  //   component: Layout,
-  //   hidden: true,
-  //   children: [
-  //     {
-  //       path: 'data/:dictId(\\d+)',
-  //       component: () => import('@/views/system/dict/data'),
-  //       name: 'data',
-  //       meta: { title: '数据字典', icon: 'list' }
-  //     }
-  //   ]
-  // },
-  // 404 page must be placed at the end !!!
+  // 404页面必须声明在最后
   { path: '*', redirect: '/404', hidden: true }
 ]
 const createRouter = () => new Router({
@@ -294,10 +198,9 @@ const createRouter = () => new Router({
   // 初始化时将所有路由都加载上，否则会出现刷新页面404的情况
   routes: constantRoutes
 })
-const router = createRouter()
-// Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
+const router = createRouter();
 export function resetRouter() {
   const newRouter = createRouter()
   router.matcher = newRouter.matcher // reset router
 }
-export default router
+export default router;
